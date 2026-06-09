@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>بازارچه سبز | خرید و فروش آسان</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="loadingScreen" class="loading-screen">
+    <div class="spinner"></div>
+    <div class="loading-text">در حال بارگذاری بازارچه سبز...</div>
+    <div class="loading-progress">
+        <div class="progress-bar"></div>
+    </div>
+</div>
+
+<header>
+    <div class="top-bar">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-leaf"></i>
+                <h1>بازارچه <span class="green-text">سبز</span></h1>
+            </div>
+            <div class="header-actions">
+                <button id="themeToggle" class="icon-btn">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="notifBtn" class="icon-btn">
+                    <i class="fas fa-bell"></i>
+                    <span id="notifBadge" class="badge">0</span>
+                </button>
+                <button id="profileBtn" class="profile-btn">
+                    <img id="profileAvatar" src="https://ui-avatars.com/api/?background=2ecc71&color=fff&rounded=true" alt="پروفایل">
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="nav-bar">
+        <div class="container">
+            <nav>
+                <a href="#" class="active" data-page="home"><i class="fas fa-home"></i> خانه</a>
+                <a href="#" data-page="products"><i class="fas fa-store"></i> محصولات</a>
+                <a href="#" data-page="dashboard"><i class="fas fa-chart-line"></i> داشبورد</a>
+                <a href="#" data-page="saved"><i class="fas fa-bookmark"></i> ذخیره‌ها</a>
+            </nav>
+            
+            <div class="search-area">
+                <div class="search-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="جستجوی محصول، برند یا دسته‌بندی...">
+                    <button id="voiceSearch" class="voice-btn"><i class="fas fa-microphone"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+        <img id="sidebarAvatar" src="https://ui-avatars.com/api/?background=2ecc71&color=fff&rounded=true" alt="پروفایل">
+        <h3 id="sidebarName">کاربر مهمان</h3>
+        <p id="sidebarEmail">ورود یا ثبت‌نام</p>
+    </div>
+    <ul class="sidebar-menu">
+        <li><a href="#" data-page="home"><i class="fas fa-home"></i> خانه</a></li>
+        <li><a href="#" data-page="products"><i class="fas fa-store"></i> محصولات</a></li>
+        <li><a href="#" data-page="dashboard"><i class="fas fa-chart-line"></i> داشبورد</a></li>
+        <li><a href="#" data-page="saved"><i class="fas fa-bookmark"></i> ذخیره‌ها</a></li>
+        <li><a href="#" id="sidebarProfileBtn"><i class="fas fa-id-card"></i> پروفایل من</a></li>
+        <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> خروج</a></li>
+    </ul>
+</div>
+<div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+<main id="mainContent">
+    <div id="homePage" class="page active-page">
+        <div class="slider-container">
+            <div class="slider" id="slider">
+                <div class="slide"><img src="https://picsum.photos/1200/400?random=1" alt="اسلاید 1"></div>
+                <div class="slide"><img src="https://picsum.photos/1200/400?random=2" alt="اسلاید 2"></div>
+                <div class="slide"><img src="https://picsum.photos/1200/400?random=3" alt="اسلاید 3"></div>
+            </div>
+            <button class="slider-btn prev"><i class="fas fa-chevron-right"></i></button>
+            <button class="slider-btn next"><i class="fas fa-chevron-left"></i></button>
+            <div class="slider-dots"></div>
+        </div>
+        
+        <div class="categories-section">
+            <div class="container">
+                <h2><i class="fas fa-th-large"></i> دسته‌بندی‌های محبوب</h2>
+                <div class="categories-grid" id="categoriesGrid"></div>
+            </div>
+        </div>
+        
+        <div class="featured-section">
+            <div class="container">
+                <h2><i class="fas fa-fire"></i> محصولات ویژه</h2>
+                <div class="products-grid" id="featuredProducts"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="productsPage" class="page">
+        <div class="container">
+            <div class="products-header">
+                <h2>همه محصولات</h2>
+                <div class="sort-options">
+                    <select id="sortSelect">
+                        <option value="newest">جدیدترین</option>
+                        <option value="price_asc">ارزان‌ترین</option>
+                        <option value="price_desc">گران‌ترین</option>
+                        <option value="popular">محبوب‌ترین</option>
+                    </select>
+                    <button id="filterToggleBtn" class="filter-toggle"><i class="fas fa-filter"></i> فیلتر</button>
+                </div>
+            </div>
+            
+            <div class="products-layout">
+                <aside id="filterSidebar" class="filter-sidebar">
+                    <h3>فیلترها</h3>
+                    <div class="filter-group">
+                        <label>محدوده قیمت</label>
+                        <input type="range" id="priceMin" min="0" max="100000000" value="0" step="100000">
+                        <input type="range" id="priceMax" min="0" max="100000000" value="100000000" step="100000">
+                        <div class="price-range-values">
+                            <span id="minPriceVal">۰</span>
+                            <span>تا</span>
+                            <span id="maxPriceVal">۱۰۰ میلیون</span>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label>دسته‌بندی</label>
+                        <select id="categoryFilter">
+                            <option value="all">همه</option>
+                            <option value="الکترونیک">الکترونیک</option>
+                            <option value="خانه و آشپزخانه">خانه و آشپزخانه</option>
+                            <option value="مد و پوشاک">مد و پوشاک</option>
+                            <option value="کتاب">کتاب و محصولات فرهنگی</option>
+                            <option value="خودرو">خودرو</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>وضعیت</label>
+                        <select id="conditionFilter">
+                            <option value="all">همه</option>
+                            <option value="new">نو</option>
+                            <option value="like_new">مثل نو</option>
+                            <option value="good">خوب</option>
+                            <option value="fair">قابل قبول</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>موقعیت مکانی</label>
+                        <input type="text" id="locationFilter" placeholder="شهر یا منطقه...">
+                    </div>
+                    <button id="resetFilters" class="reset-filters">حذف همه فیلترها</button>
+                </aside>
+                
+                <div class="products-content">
+                    <div id="productsGrid" class="products-grid"></div>
+                    <div id="pagination" class="pagination"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="dashboardPage" class="page">
+        <div class="container">
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <i class="fas fa-box"></i>
+                    <div class="stat-info">
+                        <h3 id="totalProducts">۰</h3>
+                        <p>محصولات من</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-eye"></i>
+                    <div class="stat-info">
+                        <h3 id="totalViews">۰</h3>
+                        <p>بازدید کل</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-comment"></i>
+                    <div class="stat-info">
+                        <h3 id="totalMessages">۰</h3>
+                        <p>پیام‌ها</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-chart-line"></i>
+                    <div class="stat-info">
+                        <h3 id="totalSales">۰</h3>
+                        <p>تومان فروش</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-actions">
+                <button id="quickAddBtn" class="btn-primary"><i class="fas fa-plus"></i> افزودن محصول جدید</button>
+            </div>
+            
+            <div class="my-products">
+                <h3>محصولات من</h3>
+                <div id="myProductsGrid" class="products-grid"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="savedPage" class="page">
+        <div class="container">
+            <h2><i class="fas fa-bookmark"></i> محصولات ذخیره شده</h2>
+            <div id="savedProductsGrid" class="products-grid"></div>
+        </div>
+    </div>
+</main>
+
+<div id="productModal" class="modal">
+    <div class="modal-content modal-large">
+        <span class="close">&times;</span>
+        <h2><i class="fas fa-plus-circle"></i> افزودن محصول جدید</h2>
+        <form id="productForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>نام محصول *</label>
+                    <input type="text" id="productName" required>
+                </div>
+                <div class="form-group">
+                    <label>قیمت (تومان) *</label>
+                    <input type="number" id="productPrice" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>دسته‌بندی</label>
+                    <select id="productCategory">
+                        <option value="الکترونیک">الکترونیک</option>
+                        <option value="خانه و آشپزخانه">خانه و آشپزخانه</option>
+                        <option value="مد و پوشاک">مد و پوشاک</option>
+                        <option value="کتاب">کتاب و محصولات فرهنگی</option>
+                        <option value="خودرو">خودرو</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>وضعیت</label>
+                    <select id="productCondition">
+                        <option value="new">نو</option>
+                        <option value="like_new">مثل نو</option>
+                        <option value="good">خوب</option>
+                        <option value="fair">قابل قبول</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>توضیحات محصول</label>
+                <textarea id="productDesc" rows="4" placeholder="توضیحات کامل محصول..."></textarea>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>موقعیت مکانی</label>
+                    <input type="text" id="productLocation" placeholder="شهر، منطقه">
+                </div>
+                <div class="form-group">
+                    <label>آدرس دقیق</label>
+                    <input type="text" id="productAddress" placeholder="آدرس کامل">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>تصاویر محصول (حداکثر ۵ تصویر)</label>
+                <div class="image-upload-area" id="imageUploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>برای آپلود تصاویر کلیک کنید</p>
+                    <input type="file" id="productImages" accept="image/*" multiple style="display:none">
+                </div>
+                <div id="imagePreviewContainer" class="image-preview-container"></div>
+            </div>
+            <button type="submit" class="btn-submit">ثبت محصول</button>
+        </form>
+    </div>
+</div>
+
+<div id="productDetailModal" class="product-detail-modal"></div>
+<div id="profileDetailModal" class="product-detail-modal"></div>
+<div id="editProfileModal" class="edit-profile-modal"></div>
+<div id="notificationModal" class="modal small-modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3><i class="fas fa-bell"></i> اعلان‌ها</h3>
+        <div id="notificationsList" class="notifications-list"></div>
+    </div>
+</div>
+
+<div id="confirmModal" class="modal small-modal">
+    <div class="modal-content">
+        <h3 id="confirmTitle">تایید</h3>
+        <p id="confirmMessage">آیا مطمئن هستید؟</p>
+        <div class="confirm-buttons">
+            <button id="confirmYes" class="btn-confirm-yes">بله</button>
+            <button id="confirmNo" class="btn-confirm-no">خیر</button>
+        </div>
+    </div>
+</div>
+
+<div id="mobileBottomNav" class="mobile-bottom-nav"></div>
+<div class="bottom-padding"></div>
+<div id="toast" class="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
